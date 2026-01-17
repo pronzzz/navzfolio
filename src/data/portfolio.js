@@ -1,58 +1,170 @@
 export const PORTFOLIO_ITEMS = [
-    {
-        id: 1,
-        url: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1000&auto=format&fit=crop",
-        title: "Mountain Haze",
-        preset: "Highland Mist V2",
-        orientation: "landscape"
-    },
-    {
-        id: 2,
-        url: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1000&auto=format&fit=crop",
-        title: "Urban Solitude",
-        preset: "Kodak Portra 400 Emulation",
-        orientation: "portrait"
-    },
-    {
-        id: 3,
-        url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
-        title: "Portrait Study",
-        preset: "Soft Skin Tone + Grain",
-        orientation: "portrait"
-    },
-    {
-        id: 4,
-        url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1000&auto=format&fit=crop",
-        title: "Forest Light",
-        preset: "Earthy Greens",
-        orientation: "landscape"
-    },
-    {
-        id: 5,
-        url: "https://images.unsplash.com/photo-1504280509243-48477bd40bea?q=80&w=1000&auto=format&fit=crop",
-        title: "Night Life",
-        preset: "Neon Noir",
-        orientation: "landscape"
-    },
-    {
-        id: 6,
-        url: "https://images.unsplash.com/photo-1552168324-d612d77725e3?q=80&w=1000&auto=format&fit=crop",
-        title: "Film Vibes",
-        preset: "Cinestill 800T",
-        orientation: "portrait"
-    },
-    {
-        id: 7,
-        url: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?q=80&w=1000&auto=format&fit=crop",
-        title: "Minimal Architecture",
-        preset: "B&W High Contrast",
-        orientation: "landscape"
-    },
-    {
-        id: 8,
-        url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1000&auto=format&fit=crop",
-        title: "Analog Memories",
-        preset: "Fuji Superia 200",
-        orientation: "landscape"
-    },
+  {
+    "id": 1,
+    "url": "/gallery/DSC00105.jpg",
+    "title": "DSC00105",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 2,
+    "url": "/gallery/DSC00111.jpg",
+    "title": "DSC00111",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 3,
+    "url": "/gallery/DSC00112.jpg",
+    "title": "DSC00112",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 4,
+    "url": "/gallery/DSC00113.jpg",
+    "title": "DSC00113",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 5,
+    "url": "/gallery/DSC00117.jpg",
+    "title": "DSC00117",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 6,
+    "url": "/gallery/DSC00122.jpg",
+    "title": "DSC00122",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 7,
+    "url": "/gallery/DSC00234.jpg",
+    "title": "DSC00234",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 8,
+    "url": "/gallery/DSC00272.jpg",
+    "title": "DSC00272",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 9,
+    "url": "/gallery/DSC00418.jpg",
+    "title": "DSC00418",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 10,
+    "url": "/gallery/DSC00584.jpg",
+    "title": "DSC00584",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 11,
+    "url": "/gallery/DSC00590.jpg",
+    "title": "DSC00590",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 12,
+    "url": "/gallery/DSC00600-2.jpg",
+    "title": "DSC00600 2",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 13,
+    "url": "/gallery/DSC00601.jpg",
+    "title": "DSC00601",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 14,
+    "url": "/gallery/DSC00605.jpg",
+    "title": "DSC00605",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 15,
+    "url": "/gallery/DSC00608.jpg",
+    "title": "DSC00608",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 16,
+    "url": "/gallery/DSC00610.jpg",
+    "title": "DSC00610",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 17,
+    "url": "/gallery/DSC00630.jpg",
+    "title": "DSC00630",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 18,
+    "url": "/gallery/DSC00631.jpg",
+    "title": "DSC00631",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 19,
+    "url": "/gallery/DSC00642.jpg",
+    "title": "DSC00642",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 20,
+    "url": "/gallery/SAM_0011.jpg",
+    "title": "SAM 0011",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 21,
+    "url": "/gallery/SAM_0020.jpg",
+    "title": "SAM 0020",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 22,
+    "url": "/gallery/SAM_0043.jpg",
+    "title": "SAM 0043",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 23,
+    "url": "/gallery/SAM_0055.jpg",
+    "title": "SAM 0055",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  },
+  {
+    "id": 24,
+    "url": "/gallery/SAM_0057.jpg",
+    "title": "SAM 0057",
+    "preset": "Custom Edit",
+    "orientation": "landscape"
+  }
 ];
