@@ -82,7 +82,8 @@ function generatePortfolioData() {
         const filePath = path.join(GALLERY_DIR, file);
         let orientation = 'landscape';
         try {
-            const dimensions = sizeOf(filePath);
+            const buffer = fs.readFileSync(filePath);
+            const dimensions = sizeOf(buffer);
             if (dimensions.width && dimensions.height) {
                 orientation = dimensions.height > dimensions.width ? 'portrait' : 'landscape';
             }
