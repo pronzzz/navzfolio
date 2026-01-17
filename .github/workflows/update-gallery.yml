@@ -1,0 +1,36 @@
+name: Update Gallery
+
+on:
+  push:
+    paths:
+      - 'Edits/**'
+      - 'scripts/update-gallery.js'
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Update Script
+        run: node scripts/update-gallery.js
+        env:
+          CI: true
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-sync gallery from Edits"
+          file_pattern: "public/gallery/* src/data/portfolio.js"
