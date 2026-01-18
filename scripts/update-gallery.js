@@ -3,6 +3,7 @@ import path from 'path';
 import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
 import sizeOf from 'image-size';
+import sharp from 'sharp';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,6 +11,9 @@ const __dirname = path.dirname(__filename);
 const SOURCE_DIR = path.join(__dirname, '../Edits');
 const GALLERY_DIR = path.join(__dirname, '../public/gallery');
 const DATA_FILE = path.join(__dirname, '../src/data/portfolio.js');
+
+const MAX_WIDTH = 2500;
+const QUALITY = 85;
 
 // Ensure directories exist
 if (!fs.existsSync(GALLERY_DIR)) {
@@ -21,7 +25,7 @@ function formatTitle(filename) {
     return name.replace(/[-_]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 }
 
-function syncImages() {
+async function syncImages() {
     if (!fs.existsSync(SOURCE_DIR)) {
         console.log('Edits directory not found. Skipping sync.');
         return;
@@ -32,47 +36,79 @@ function syncImages() {
 
     let syncedCount = 0;
 
-    sourceFiles.forEach(file => {
+    for (const file of sourceFiles) {
         if (validExtensions.test(file)) {
             const srcPath = path.join(SOURCE_DIR, file);
-            const destPath = path.join(GALLERY_DIR, file);
 
-            // Copy if doesn't exist or if newer? For now just copy if missing or overwrite.
-            // Using copyFileSync overwrites by default.
-            fs.copyFileSync(srcPath, destPath);
-            syncedCount++;
-        }
-    });
+            // Change extension to .webp for better compression
+            const fileNameNoExt = file.replace(/\.[^/.]+$/, "");
+            const destFile = `${fileNameNoExt}.webp`;
+            const destPath = path.join(GALLERY_DIR, destFile);
 
-    // Optional: Clean up files in gallery that are NOT in Edits?
-    // User didn't ask for sync-delete, but "implement my images".
-    // "remove the placeholder images" -> implies replacing.
-    // Ideally we should mirror Edits.
-    // Let's list files in Gallery and delete those not in Edits (if Edits is not empty).
-    if (sourceFiles.length > 0) {
-        const galleryFiles = fs.readdirSync(GALLERY_DIR);
-        galleryFiles.forEach(file => {
-            if (!sourceFiles.includes(file) && validExtensions.test(file)) {
-                fs.unlinkSync(path.join(GALLERY_DIR, file));
-                console.log(`Removed ${file} from gallery (not in Edits).`);
+            let shouldProcess = true;
+            if (fs.existsSync(destPath)) {
+                try {
+                    const srcStat = fs.statSync(srcPath);
+                    const destStat = fs.statSync(destPath);
+                    // If src is older than dest, we assume it's up to date
+                    if (srcStat.mtime < destStat.mtime) {
+                        shouldProcess = false;
+                    }
+                } catch (e) { }
             }
-        });
+
+            if (shouldProcess) {
+                try {
+                    console.log(`Optimizing ${file} -> ${destFile}...`);
+                    await sharp(srcPath)
+                        .rotate()
+                        .resize({
+                            width: MAX_WIDTH,
+                            withoutEnlargement: true
+                        })
+                        .webp({ quality: QUALITY })
+                        .toFile(destPath);
+                    syncedCount++;
+                } catch (error) {
+                    console.error(`Failed to process ${file}:`, error.message);
+                }
+            }
+        }
     }
 
-    console.log(`Synced ${syncedCount} images from Edits to public/gallery.`);
+    // Cleanup: Remove files that don't have a source
+    const galleryFiles = fs.readdirSync(GALLERY_DIR);
+    for (const file of galleryFiles) {
+        // If it's a webp, check if there's a matching source file with any valid extension
+        if (file.endsWith('.webp')) {
+            const nameNoExt = file.replace('.webp', '');
+            const hasSource = sourceFiles.some(src => src.startsWith(nameNoExt + '.'));
+
+            if (!hasSource) {
+                fs.unlinkSync(path.join(GALLERY_DIR, file));
+                console.log(`Removed ${file} from gallery (source deleted).`);
+            }
+        } else if (/\.(jpg|jpeg|png)$/i.test(file)) {
+            // Remove legacy formats - we moving to webp
+            fs.unlinkSync(path.join(GALLERY_DIR, file));
+            console.log(`Removed legacy format ${file} from gallery.`);
+        }
+    }
+
+    console.log(`Optimized and synced ${syncedCount} new/updated images.`);
 }
 
-function generatePortfolioData() {
+async function generatePortfolioData() {
     // 1. Sync first
-    syncImages();
+    await syncImages();
 
     // 2. Read Gallery
     const files = fs.readdirSync(GALLERY_DIR);
-    const images = files.filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file));
+    // Only look for webp now
+    const images = files.filter(file => /\.(webp)$/i.test(file));
 
     if (images.length === 0) {
         console.log('No images found in public/gallery.');
-        // Write empty array?
         const emptyContent = `export const PORTFOLIO_ITEMS = [];`;
         fs.writeFileSync(DATA_FILE, emptyContent);
         return true;
@@ -118,7 +154,6 @@ function generatePortfolioData() {
 }
 
 function gitPush() {
-    // Check if we are in CI environment to avoid duplicate pushes or auth errors
     if (process.env.CI) {
         console.log('Running in CI, skipping script-based git push (CI should handle it).');
         return;
@@ -135,16 +170,14 @@ function gitPush() {
 }
 
 // Main execution
-try {
-    const updated = generatePortfolioData();
-    if (updated) {
-        // Only push if explicitly running in a context where auto-push is desired?
-        // The previous script ran gitPush() automatically.
-        // We'll keep it, but maybe verify if 'Edits' changed anything.
-        gitPush();
+(async () => {
+    try {
+        const updated = await generatePortfolioData();
+        if (updated) {
+            gitPush();
+        }
+    } catch (error) {
+        console.error("Error in update-gallery:", error);
+        process.exit(1);
     }
-} catch (error) {
-    console.error("Error in update-gallery:", error);
-    process.exit(1);
-}
-
+})();
