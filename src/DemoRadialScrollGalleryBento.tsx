@@ -28,10 +28,10 @@ export default function DemoRadialScrollGalleryBento() {
             <div className="h-[300px] flex flex-col items-center justify-center space-y-4 pt-8">
                 <div className="space-y-1 text-center">
                     <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
-                        Portfolio
+                        Welcome to my
                     </span>
                     <h1 className="text-4xl font-bold tracking-tighter">
-                        Welcome to my Photography Gallery
+                        Photography Portfolio
                     </h1>
                 </div>
                 <div className="animate-bounce text-muted-foreground text-xs">↓ Scroll</div>
@@ -134,11 +134,6 @@ export default function DemoRadialScrollGalleryBento() {
                 )}
             </AnimatePresence>
 
-            <div className="h-[200px] flex items-center justify-center bg-muted/30">
-                <h2 className="text-sm font-medium tracking-wide text-muted-foreground opacity-70">
-                    Copyright 2025. Made with love by Me
-                </h2>
-            </div>
         </div>
     );
 }
