@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 const SOURCE_DIR = path.join(__dirname, '../Edits');
 const GALLERY_DIR = path.join(__dirname, '../public/gallery');
-const DATA_FILE = path.join(__dirname, '../src/data/portfolio.js');
+const DATA_FILE = path.join(__dirname, '../src/data/portfolio.ts');
 
 const MAX_WIDTH = 2500;
 const QUALITY = 85;
@@ -136,7 +136,15 @@ async function generatePortfolioData() {
         };
     });
 
-    const fileContent = `export const PORTFOLIO_ITEMS = ${JSON.stringify(items, null, 2)};`;
+    const fileContent = `export interface PortfolioItem {
+  id: number;
+  url: string;
+  title: string;
+  preset: string;
+  orientation: string;
+}
+
+export const PORTFOLIO_ITEMS: PortfolioItem[] = ${JSON.stringify(items, null, 2)};`;
 
     let currentContent = '';
     if (fs.existsSync(DATA_FILE)) {
@@ -145,7 +153,7 @@ async function generatePortfolioData() {
 
     if (fileContent !== currentContent) {
         fs.writeFileSync(DATA_FILE, fileContent);
-        console.log('Updated src/data/portfolio.js with ' + items.length + ' items.');
+        console.log('Updated src/data/portfolio.ts with ' + items.length + ' items.');
         return true;
     } else {
         console.log('No changes detected in gallery data.');
