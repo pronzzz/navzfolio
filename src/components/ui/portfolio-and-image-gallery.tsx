@@ -238,7 +238,7 @@ export const RadialScrollGallery = forwardRef<
         return (
             <div
                 ref={mergedRef}
-                className={`min-h-screen w-full relative flex items-center justify-center overflow-hidden ${className}`}
+                className={`min-h-screen w-full relative flex items-center justify-center ${className}`}
                 {...rest}
             >
                 <div
