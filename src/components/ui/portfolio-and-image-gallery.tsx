@@ -242,7 +242,7 @@ export const RadialScrollGallery = forwardRef<
                 {...rest}
             >
                 <div
-                    className='relative w-full overflow-hidden'
+                    className='relative w-full overflow-visible'
                     style={{
                         height: `${visibleAreaHeight}px`,
                     }}

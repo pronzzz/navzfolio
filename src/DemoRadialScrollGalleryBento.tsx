@@ -24,7 +24,7 @@ export default function DemoRadialScrollGalleryBento() {
     const selectedProject = PORTFOLIO_ITEMS.find(p => p.id === selectedId);
 
     return (
-        <div className="bg-background min-h-[600px] text-foreground overflow-hidden w-full relative">
+        <div className="bg-background min-h-[600px] text-foreground overflow-x-hidden w-full relative">
             <div className="h-[300px] flex flex-col items-center justify-center space-y-4 pt-8">
                 <div className="space-y-1 text-center">
                     <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
@@ -122,7 +122,6 @@ export default function DemoRadialScrollGalleryBento() {
                                     {selectedProject.title}
                                 </motion.h3>
                                 <div className="flex items-center gap-2 mt-2">
-                                    <Badge variant="outline">{selectedProject.orientation}</Badge>
                                     <Badge variant="secondary">{selectedProject.preset}</Badge>
                                 </div>
                             </div>
