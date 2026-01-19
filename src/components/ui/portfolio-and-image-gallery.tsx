@@ -245,10 +245,6 @@ export const RadialScrollGallery = forwardRef<
                     className='relative w-full overflow-hidden'
                     style={{
                         height: `${visibleAreaHeight}px`,
-                        maskImage:
-                            'linear-gradient(to top, transparent 0%, black 40%, black 100%)',
-                        WebkitMaskImage:
-                            'linear-gradient(to top, transparent 0%, black 40%, black 100%)',
                     }}
                 >
                     <ul

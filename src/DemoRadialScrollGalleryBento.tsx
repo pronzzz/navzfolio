@@ -72,9 +72,6 @@ export default function DemoRadialScrollGalleryBento() {
 
                                 <div className="absolute inset-0 flex flex-col justify-between p-4">
                                     <div className="flex justify-between items-start">
-                                        <Badge variant="secondary" className="text-[10px] px-2 py-0 bg-background/80 backdrop-blur">
-                                            {project.orientation}
-                                        </Badge>
                                         <div className={`w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center transition-all duration-500 ${isActive ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-45'}`}>
                                             <ArrowUpRight size={12} />
                                         </div>
