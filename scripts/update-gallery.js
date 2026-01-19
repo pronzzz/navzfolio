@@ -162,18 +162,24 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = ${JSON.stringify(items, null, 2)
 }
 
 function gitPush() {
-    if (process.env.CI) {
-        console.log('Running in CI, skipping script-based git push (CI should handle it).');
-        return;
-    }
-
-    exec('git add . && git commit -m "Auto-update gallery" && git push origin main', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Git Error: ${error.message}`);
+    return new Promise((resolve, reject) => {
+        if (process.env.CI) {
+            console.log('Running in CI, skipping script-based git push (CI should handle it).');
+            resolve();
             return;
         }
-        if (stderr) console.error(`Git Stderr: ${stderr}`);
-        console.log(`Git Stdout: ${stdout}`);
+
+        exec('git add . && git commit -m "Auto-update gallery" && git push origin main', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Git Error: ${error.message}`);
+                // Don't reject, just log error so script doesn't crash if git fails (e.g. nothing to commit)
+                resolve();
+                return;
+            }
+            if (stderr) console.error(`Git Stderr: ${stderr}`);
+            console.log(`Git Stdout: ${stdout}`);
+            resolve();
+        });
     });
 }
 
@@ -182,7 +188,7 @@ function gitPush() {
     try {
         const updated = await generatePortfolioData();
         if (updated) {
-            gitPush();
+            await gitPush();
         }
     } catch (error) {
         console.error("Error in update-gallery:", error);
