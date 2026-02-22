@@ -62,7 +62,7 @@ export default function DemoRadialScrollGalleryBento() {
                                 <div className="absolute inset-0 overflow-hidden">
                                     <motion.img
                                         layoutId={`image-${project.id}`}
-                                        src={project.url}
+                                        src={encodeURI(project.url)}
                                         alt={project.title}
                                         className={`h-full w-full object-cover transition-transform duration-700 ease-out ${isActive ? 'scale-110 blur-0' : 'scale-100 blur-[1px] grayscale-[30%]'
                                             }`}
@@ -106,7 +106,7 @@ export default function DemoRadialScrollGalleryBento() {
                             <div className="relative flex-1 overflow-hidden bg-black/5 flex items-center justify-center">
                                 <motion.img
                                     layoutId={`image-${selectedId}`}
-                                    src={selectedProject.url}
+                                    src={encodeURI(selectedProject.url)}
                                     alt={selectedProject.title}
                                     className="w-full h-full object-contain max-h-[85vh]"
                                 />
